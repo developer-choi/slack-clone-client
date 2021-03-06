@@ -11,6 +11,14 @@ module.exports = {
       {
         test: /\.(ts|tsx)$/,
         loader: 'babel-loader'
+      },
+      {
+        test: /\.(png)$/,
+        loader: 'file-loader'
+      },
+      {
+        test: /\.(css)/,
+        use: ['style-loader', 'css-loader']
       }
     ]
   },
@@ -21,6 +29,7 @@ module.exports = {
     new HtmlWebpackPlugin({template: 'index.html'})
   ],
   devServer: {
-    historyApiFallback: true
+    historyApiFallback: true,
+    hot: true
   }
 };

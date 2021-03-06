@@ -4,13 +4,21 @@ module.exports = {
   mode: "production",
   output: {
     publicPath: '/',
-    filename: '[name][fullhash].js',
+    filename: '[name][hash].js',
   },
   module: {
     rules: [
       {
         test: /\.(ts|tsx)$/,
         loader: 'babel-loader'
+      },
+      {
+        test: /\.(png)$/,
+        loader: 'file-loader'
+      },
+      {
+        test: /\.(css)/,
+        use: ['style-loader', 'css-loader']
       }
     ]
   },
