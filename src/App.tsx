@@ -1,26 +1,40 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {useEffect} from 'react';
+import axios from 'axios';
+import {BrowserRouter} from 'react-router-dom';
+import Routes from './Routes';
 
-function App() {
+export default function App() {
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const res = await axios.get('https://asia-northeast3-slack-clone-d3936.cloudfunctions.net/api/helloWorld1');
+        console.log(res);
+      } catch (error) {
+        console.error(error);
+      }
+    })().then();
+    (async () => {
+      try {
+        const res = await axios.get('https://asia-northeast3-slack-clone-d3936.cloudfunctions.net/api/helloWorld2');
+        console.log(res);
+      } catch (error) {
+        console.error(error);
+      }
+    })().then();
+    (async () => {
+      try {
+        const res = await axios.get('https://asia-northeast3-slack-clone-d3936.cloudfunctions.net/api/helloWorld3');
+        console.log(res);
+      } catch (error) {
+        console.error(error);
+      }
+    })().then();
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <BrowserRouter>
+        <Routes/>
+      </BrowserRouter>
   );
 }
-
-export default App;
