@@ -26,7 +26,7 @@ module.exports = {
     extensions: ['.js', '.ts', '.tsx']
   },
   plugins: [
-    new HtmlWebpackPlugin({template: 'index.html'})
+    new HtmlWebpackPlugin({template: 'index.html', favicon: './public/favicon.ico'})
   ],
   devServer: {
     historyApiFallback: true,

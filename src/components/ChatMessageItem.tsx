@@ -1,10 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
-import firebase from 'firebase';
+import firebase from 'firebase/app';
+import 'firebase/firestore';
 
 export interface ChatMessageItemProp {
   message: string;
-  timestamp: firebase.firestore.Timestamp;
+  timestamp?: firebase.firestore.Timestamp;
   userImage: string;
   username: string;
 }
@@ -17,7 +18,7 @@ export default function ChatMessageItem({message, timestamp, userImage, username
         <Info>
           <h4>
             {username}
-            <span>{new Date(timestamp.toDate()).toUTCString()}</span>
+            {timestamp && <span>{new Date(timestamp.toDate()).toUTCString()}</span>}
             <p>{message}</p>
           </h4>
         </Info>

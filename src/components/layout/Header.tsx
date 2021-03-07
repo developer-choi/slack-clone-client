@@ -7,7 +7,8 @@ import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 import {auth} from '../../utils/extend/firebase';
 import useAuthStateExtend from '../../utils/custom-hooks/useAuthStateExtend';
 import {HEIGHTS} from '../../utils/style/layout';
-import firebase from 'firebase';
+import firebase from 'firebase/app';
+import 'firebase/auth';
 
 export default function Header() {
   //로그인하지않은 사용자는 이 컴포넌트가 절대 렌더링되지않기 때문에, assertion을 사용함.

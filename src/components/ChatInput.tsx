@@ -3,7 +3,9 @@ import styled from 'styled-components';
 import FormExtend from './extend/FormExtend';
 import {Button} from '@material-ui/core';
 import {db} from '../utils/extend/firebase';
-import firebase from 'firebase';
+import firebase from 'firebase/app';
+import 'firebase/auth';
+import 'firebase/firestore';
 import useAuthStateExtend from '../utils/custom-hooks/useAuthStateExtend';
 
 export interface ChatInputProp {

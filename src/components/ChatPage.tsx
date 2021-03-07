@@ -58,9 +58,9 @@ export default function ChatPage() {
         </Header>
         <ChatMessages>
           {roomMessages.docs.map(doc => {
-            const {message, timestamp, user, userImage, id} = doc.data();
+            const {message, timestamp, user, userImage} = doc.data();
             return (
-                <ChatMessageItem key={id} message={message} userImage={userImage} username={user} timestamp={timestamp}/>
+                <ChatMessageItem key={doc.id} message={message} userImage={userImage} username={user} timestamp={timestamp}/>
             );
           })}
           <ChatBottom ref={chatRef}/>
