@@ -8,3 +8,4 @@ Firebase, React, Redux, Typescript
 
 # 기존 프로젝트와의 차이점
 Javascript로 구현되었던 프로젝트를 Typescript로 수정했습니다.<br>
+영상 보면서 따라 만들다 생긴 대부분의 경고를 해결했습니다. 
