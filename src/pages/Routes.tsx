@@ -1,9 +1,9 @@
 import React from 'react';
 import {Route, Switch} from 'react-router-dom';
 import Layout from '../components/layout/Layout';
-import Chat from '../components/Chat';
+import ChatPage from '../components/ChatPage';
 import {useAuthState} from 'react-firebase-hooks/auth';
-import {auth} from '../firebase';
+import {auth} from '../utils/extend/firebase';
 import LoginPage from './LoginPage';
 import styled from 'styled-components';
 import Spinner from 'react-spinkit';
@@ -12,7 +12,7 @@ import {theme} from '../utils/style/theme';
 export default function Routes() {
 
   const [user, loading] = useAuthState(auth);
-
+  
   if (loading) {
     return (
         <LoadingWrap>
@@ -28,7 +28,7 @@ export default function Routes() {
             :
             <Route>
               <Layout>
-                <Chat/>
+                <ChatPage/>
               </Layout>
             </Route>
         }

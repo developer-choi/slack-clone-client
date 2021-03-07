@@ -2,7 +2,7 @@ import React, {useCallback} from 'react';
 import styled from 'styled-components';
 import SlackLogoPng from '../../public/slack-logo.png';
 import {Button} from '@material-ui/core';
-import {auth, provider} from '../firebase';
+import {auth, provider} from '../utils/extend/firebase';
 
 export default function LoginPage() {
 

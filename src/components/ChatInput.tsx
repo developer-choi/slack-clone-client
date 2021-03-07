@@ -1,37 +1,36 @@
-import React, {Ref, useCallback, useRef} from 'react';
+import React, {useCallback, useRef} from 'react';
 import styled from 'styled-components';
 import FormExtend from './extend/FormExtend';
 import {Button} from '@material-ui/core';
-import {auth, db} from '../firebase';
+import {db} from '../utils/extend/firebase';
 import firebase from 'firebase';
-import {useAuthState} from 'react-firebase-hooks/auth';
+import useAuthStateExtend from '../utils/custom-hooks/useAuthStateExtend';
 
 export interface ChatInputProp {
-  channelId: string;
+  roomId: string;
   channelName: string;
-  chatRef: Ref<HTMLDivElement>;
+  onSendSuccess: () => void;
 }
 
-export default function ChatInput({channelName, channelId, chatRef}: ChatInputProp) {
-
+export default function ChatInput({channelName, roomId, onSendSuccess}: ChatInputProp) {
+  
+  //이 컴포넌트는, 로그인하지않으면 렌더링되지않으므로 assertion
+  const {displayName, photoURL} = useAuthStateExtend()[0] as firebase.User;
   const inputRef = useRef<HTMLInputElement>(null);
-  const [user] = useAuthState(auth);
 
   //https://youtu.be/QiTq5WrWoJw?t=8002 부터 설명시작
   const sendMessage = useCallback(async () => {
-    if (channelId && inputRef.current) {
-      await db.collection('rooms').doc(channelId).collection('messages').add({
+    if (roomId && inputRef.current) {
+      await db.collection('rooms').doc(roomId).collection('messages').add({
         message: inputRef.current.value,
         timestamp: firebase.firestore.FieldValue.serverTimestamp(), //https://youtu.be/QiTq5WrWoJw?t=8123 부터 설명시작
-        user: user?.displayName,
-        userImage: user?.photoURL
+        user: displayName,
+        userImage: photoURL
       });
       inputRef.current.value = '';
-      chatRef?.current?.scrollIntoView({
-        behavior: 'smooth'
-      });
+      onSendSuccess();
     }
-  }, [channelId, chatRef]);
+  }, [roomId, onSendSuccess, displayName, photoURL]);
 
   return (
       <Wrap>
@@ -43,13 +42,12 @@ export default function ChatInput({channelName, channelId, chatRef}: ChatInputPr
 
 const Wrap = styled(FormExtend)`
   border-radius: 20px;
-  position: relative;
   display: flex;
   justify-content: center;
+  padding-bottom: 30px;
+  margin-top: auto;
   
   > input {
-    position: fixed;
-    bottom: 30px;
     width: 60%;
     border: 1px solid gray;
     border-radius: 3px;

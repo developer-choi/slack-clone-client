@@ -3,26 +3,27 @@ import styled from 'styled-components';
 import {Avatar} from '@material-ui/core';
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import SearchIcon from '@material-ui/icons/Search';
-import HelpOutlineIcon from '@material-ui/icons/HelpOutline'
-import {useAuthState} from 'react-firebase-hooks/auth';
-import {auth} from '../../firebase';
+import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
+import {auth} from '../../utils/extend/firebase';
+import useAuthStateExtend from '../../utils/custom-hooks/useAuthStateExtend';
+import {HEIGHTS} from '../../utils/style/layout';
+import firebase from 'firebase';
 
 export default function Header() {
-  const [user] = useAuthState(auth);
+  //로그인하지않은 사용자는 이 컴포넌트가 절대 렌더링되지않기 때문에, assertion을 사용함.
+  const user = useAuthStateExtend()[0] as firebase.User;
 
   const onClickAvatar = useCallback(() => {
-    auth.signOut();
+    auth.signOut().then();
   }, []);
 
   return (
       <Container>
-      {/* Header Left */}
       <HeaderLeft>
-        <HeaderAvatar onClick={onClickAvatar} alt={user?.displayName} src={user?.photoURL}/>
+        <HeaderAvatar onClick={onClickAvatar} alt={user.displayName ?? undefined} src={user.photoURL ?? undefined}/>
         <AccessTimeIcon/>
       </HeaderLeft>
 
-      {/* Header Search */}
       <HeaderSearch>
         <SearchIcon/>
         <input placeholder="Search text"/>
@@ -31,7 +32,6 @@ export default function Header() {
         <HeaderRight>
           <HelpOutlineIcon/>
         </HeaderRight>
-      {/* Header Right */}
       </Container>
   );
 }
@@ -40,6 +40,7 @@ const Container = styled.div`
   display: flex;
   position: fixed;
   width: 100%;
+  height: ${HEIGHTS.header}px;
   align-items: center;
   justify-content: space-around;
   padding: 10px 0;

@@ -1,18 +1,18 @@
 import React, {useCallback} from 'react';
 import styled from 'styled-components';
 import {SvgIconProps} from '@material-ui/core';
-import {db} from '../../firebase';
+import {db} from '../../utils/extend/firebase';
 import {useDispatch} from 'react-redux';
 import {enterRoomActionCreator} from '../../store/room';
 
 export interface SidebarOptionProp {
   title: string;
   icon?: (props: SvgIconProps) => JSX.Element;
-  addChannelOption?: boolean;
-  id?: string;
+  enableAddRoom?: boolean;
+  roomId?: string;
 }
 
-export default function SidebarOption({icon: Icon, title, addChannelOption, id}: SidebarOptionProp) {
+export default function SidebarOption({icon: Icon, title, enableAddRoom, roomId}: SidebarOptionProp) {
 
   const dispatch = useDispatch();
 
@@ -26,13 +26,13 @@ export default function SidebarOption({icon: Icon, title, addChannelOption, id}:
     }
   }, []);
   const selectChannel = useCallback(() => {
-    if (id) {
-      dispatch(enterRoomActionCreator(id));
+    if (roomId) {
+      dispatch(enterRoomActionCreator(roomId));
     }
-  }, []);
+  }, [roomId, dispatch]);
 
   return (
-      <Wrap onClick={addChannelOption ? addChannel : selectChannel}>
+      <Wrap onClick={enableAddRoom ? addChannel : selectChannel}>
         {Icon ?
             <>
               <Icon fontSize="small" style={{margin: 10}}/>
